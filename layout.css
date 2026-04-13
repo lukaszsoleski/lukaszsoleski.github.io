@@ -1,0 +1,23 @@
+
+
+.page-grid-layout{
+    height: 100%;
+    display: grid;
+
+    grid-template-rows: auto auto 100px;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+        "about details"
+        "about details"
+        "footer footer";
+}
+.about-grid-item{
+    grid-area: about;
+}
+.details-grid-item{
+    grid-area: details;
+}
+.footer-grid-item{
+    grid-area: footer;
+}
+

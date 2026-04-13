@@ -1,0 +1,40 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: dimgray;
+    font-family: 'Lato', sans-serif;
+}
+#avatar {
+    /* This image is 687 wide by 1024 tall, similar to your aspect ratio */
+    background-image: url('./avatar.jpg');
+    
+    /* make a square container */
+    width: 12rem;
+    height: 12rem;
+
+    /* fill the container, preserving aspect ratio, and cropping to fit */
+    background-size: cover;
+    /* center the image vertically and horizontally */
+    background-position: center center;
+
+    /* round the edges to a circle with border radius 1/2 container size */
+    border-radius: 50%;
+
+    border-color: black;
+
+    border-width: 0.3rem;
+
+    border-style: solid;
+}
+
+h1{
+    text-transform: uppercase;
+    
+    font-weight: 400;
+}
+
+h2{
+    font-weight: 400;
+}

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Łukasz Soleski</title>
+    <script>document.documentElement.classList.add('js-loading');</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Sora', 'sans-serif'],
+                        body: ['Source Sans 3', 'sans-serif'],
+                        mono: ['IBM Plex Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: '#26313c',
+                        accent: '#6b7785',
+                        'accent-dark': '#556272',
+                        muted: '#6b7280',
+                        surface: '#f3f4f5',
+                        card: '#fbfbfa',
+                        line: '#d7dce2',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(.22,1,.36,1) both',
+                        'fade-in': 'fadeIn 0.5s ease both',
+                        'slide-in-left': 'slideInLeft 0.5s cubic-bezier(.22,1,.36,1) both',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(24px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
+        body { font-family: 'Source Sans 3', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.55), transparent 44%),
+                radial-gradient(circle at 82% 88%, rgba(148, 163, 184, 0.18), transparent 36%);
+        }
+
+        .meta-mono {
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.06em;
+        }
+
+        #avatar {
+            background-image: url('./avatar2.jpg');
+            background-size: cover;
+            background-position: center top;
+        }
+
+        /* Staggered delays */
+        .d1 { --entry-delay: 0.05s; animation-delay: var(--entry-delay); }
+        .d2 { --entry-delay: 0.12s; animation-delay: var(--entry-delay); }
+        .d3 { --entry-delay: 0.19s; animation-delay: var(--entry-delay); }
+        .d4 { --entry-delay: 0.26s; animation-delay: var(--entry-delay); }
+        .d5 { --entry-delay: 0.33s; animation-delay: var(--entry-delay); }
+        .d6 { --entry-delay: 0.40s; animation-delay: var(--entry-delay); }
+        .d7 { --entry-delay: 0.47s; animation-delay: var(--entry-delay); }
+        .d8 { --entry-delay: 0.54s; animation-delay: var(--entry-delay); }
+        .d9 { --entry-delay: 0.61s; animation-delay: var(--entry-delay); }
+
+        @media screen {
+            .cv-page {
+                transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1);
+            }
+
+            .animate-fade-in-up,
+            .animate-fade-in,
+            .animate-slide-in-left {
+                animation-duration: 0.78s !important;
+                animation-timing-function: cubic-bezier(.22,1,.36,1) !important;
+                animation-delay: var(--entry-delay, 0s) !important;
+            }
+
+            html.js-loading .cv-page {
+                opacity: 0.01;
+                transform: translateY(18px) scale(0.995);
+            }
+
+            html.js-loading .animate-fade-in-up,
+            html.js-loading .animate-fade-in,
+            html.js-loading .animate-slide-in-left {
+                animation-play-state: paused !important;
+            }
+
+            html.js-loading .cv-header h1,
+            html.js-loading .cv-header p,
+            html.js-loading .cv-header .meta-mono a,
+            html.js-loading .cv-header .meta-mono span,
+            html.js-loading .cv-about p,
+            html.js-loading .cv-sidebar h3,
+            html.js-loading .cv-sidebar p,
+            html.js-loading .cv-main .timeline-dot h3,
+            html.js-loading .cv-main .timeline-dot p,
+            html.js-loading .skill-tag,
+            html.js-loading .cv-footer p {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            .cv-header h1,
+            .cv-header p,
+            .cv-header .meta-mono a,
+            .cv-header .meta-mono span,
+            .cv-about p,
+            .cv-sidebar h3,
+            .cv-sidebar p,
+            .cv-main .timeline-dot h3,
+            .cv-main .timeline-dot p,
+            .skill-tag,
+            .cv-footer p {
+                transition:
+                    opacity 0.72s cubic-bezier(.22,1,.36,1),
+                    transform 0.72s cubic-bezier(.22,1,.36,1);
+                transition-delay: calc(var(--entry-delay, 0s) + 0.12s);
+                will-change: opacity, transform;
+            }
+
+            .cv-header p,
+            .cv-header .meta-mono a,
+            .cv-header .meta-mono span,
+            .cv-sidebar p,
+            .cv-main .timeline-dot p,
+            .skill-tag,
+            .cv-footer p {
+                transition-delay: calc(var(--entry-delay, 0s) + 0.2s);
+            }
+
+            html.page-ready .cv-page {
+                opacity: 1;
+                transform: none;
+            }
+
+            html.page-ready .cv-header h1,
+            html.page-ready .cv-header p,
+            html.page-ready .cv-header .meta-mono a,
+            html.page-ready .cv-header .meta-mono span,
+            html.page-ready .cv-about p,
+            html.page-ready .cv-sidebar h3,
+            html.page-ready .cv-sidebar p,
+            html.page-ready .cv-main .timeline-dot h3,
+            html.page-ready .cv-main .timeline-dot p,
+            html.page-ready .skill-tag,
+            html.page-ready .cv-footer p {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cv-page,
+            .cv-header h1,
+            .cv-header p,
+            .cv-header .meta-mono a,
+            .cv-header .meta-mono span,
+            .cv-about p,
+            .cv-sidebar h3,
+            .cv-sidebar p,
+            .cv-main .timeline-dot h3,
+            .cv-main .timeline-dot p,
+            .skill-tag,
+            .cv-footer p {
+                transition: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+
+            .animate-fade-in-up,
+            .animate-fade-in,
+            .animate-slide-in-left {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        /* Section heading line accent */
+        .section-title { position: relative; }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 34px;
+            height: 2px;
+            background: #6b7785;
+            border-radius: 2px;
+        }
+
+        /* Timeline dot */
+        .timeline-dot {
+            position: relative;
+            padding-left: 24px;
+        }
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6b7785;
+            box-shadow: 0 0 0 3px rgba(107, 119, 133, 0.2);
+        }
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 22px;
+            width: 2px;
+            height: calc(100% - 14px);
+            background: #d7dce2;
+        }
+        .timeline-dot:last-child::after { display: none; }
+
+        /* Skill tag */
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+                justify-content: center;
+            gap: 4px;
+            padding: 4px 9px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+                text-align: center;
+                white-space: nowrap;
+            background: #edf1f4;
+            color: #3b4653;
+            border-radius: 999px;
+            border: 1px solid #d7dce2;
+            transition: all 0.2s;
+        }
+        .skill-tag:hover {
+            background: #556272;
+            color: #fff;
+            border-color: #556272;
+        }
+
+        .cv-header {
+            position: relative;
+        }
+
+        .screen-only {
+            display: flex;
+        }
+
+        .cv-actions {
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .cv-actions {
+                position: absolute;
+                top: 28px;
+                right: 40px;
+                margin-top: 0;
+                justify-content: flex-end;
+            }
+        }
+
+        @media print {
+            html, body {
+                background: #fff !important;
+            }
+
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                min-height: auto !important;
+                display: block !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            body::before {
+                display: none !important;
+            }
+
+            .screen-only {
+                display: none !important;
+            }
+
+            .cv-page {
+                width: 100% !important;
+                max-width: none !important;
+                border: 1px solid #d7dce2 !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+            }
+
+            .cv-header {
+                display: flex !important;
+                flex-direction: row !important;
+            }
+
+            .cv-header {
+                align-items: center !important;
+            }
+
+            .cv-columns {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .cv-sidebar {
+                order: 2;
+                width: 100% !important;
+                min-width: 0 !important;
+                flex: none !important;
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 20px 28px;
+                border-right: 0 !important;
+                border-top: 1px solid #d7dce2 !important;
+                padding: 24px 40px 0 !important;
+            }
+
+            .cv-main {
+                order: 1;
+                flex: none !important;
+                padding: 28px 40px !important;
+            }
+
+            .cv-header,
+            .cv-about,
+            .cv-sidebar section,
+            .cv-footer {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .timeline-dot {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            .print-keep-together {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .print-page-break-before {
+                break-before: page;
+                page-break-before: always;
+            }
+
+            .print-page-top-gap {
+                --print-page-gap: 32px;
+                padding-top: var(--print-page-gap);
+            }
+
+            .print-page-top-gap::before {
+                top: calc(7px + var(--print-page-gap));
+            }
+
+            .print-page-top-gap::after {
+                top: calc(22px + var(--print-page-gap));
+                height: calc(100% - (14px + var(--print-page-gap)));
+            }
+
+            a {
+                color: inherit !important;
+                text-decoration: none !important;
+            }
+
+            .shadow-2xl, .shadow-lg, .shadow { box-shadow: none !important; }
+            [class*="animate-"] { animation: none !important; opacity: 1 !important; }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-zinc-200 via-slate-100 to-stone-200 flex justify-center py-8 px-4 antialiased">
+
+    <div class="cv-page w-full max-w-[960px] bg-card border border-line shadow-2xl animate-fade-in overflow-hidden">
+
+        <!-- ████ HEADER ████ -->
+        <header class="cv-header bg-gradient-to-r from-primary via-slate-700 to-slate-800 text-slate-50 px-10 py-10 flex flex-col md:flex-row items-center gap-8 animate-fade-in-up d1 border-b border-white/10">
+            <!-- Avatar -->
+            <div id="avatar"
+                 class="w-36 h-36 rounded-2xl border-4 border-white/20 shadow-lg flex-shrink-0"></div>
+
+            <!-- Name + Contact -->
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-3xl font-bold uppercase tracking-[2.5px] leading-tight">Łukasz Soleski</h1>
+                <p class="text-slate-200/90 text-[0.76rem] font-medium uppercase mt-2 meta-mono">.NET Developer</p>
+
+                <div class="screen-only cv-actions flex-wrap text-[0.68rem] text-slate-300/95 meta-mono">
+                    <a href="./index.html" class="px-2.5 py-1 rounded-full border border-white/15 bg-white/10 text-white">PL</a>
+                    <a href="./en.html" class="px-2.5 py-1 rounded-full border border-white/15 hover:text-white hover:bg-white/10 transition-colors">EN</a>
+                    <a href="./cv-pl.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/15 hover:text-white hover:bg-white/10 transition-colors">
+                        <i class="fas fa-file-pdf text-accent text-[10px]"></i>
+                        <span>PDF</span>
+                    </a>
+                </div>
+
+                <!-- Contact row -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2 mt-5 text-[0.73rem] text-slate-300/95 meta-mono">
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-accent text-xs"></i> Piaseczno
+                    </span>
+                    <a href="https://www.linkedin.com/in/%C5%82ukasz-soleski-22a724196/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-white transition-colors">
+                        <i class="fab fa-linkedin text-accent text-xs"></i> linkedin.com/in/łukasz-soleski-22a724196
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ████ O MNIE – pełna szerokość, wyróżniony ████ -->
+        <section class="cv-about bg-gradient-to-b from-surface to-slate-50 border-b border-line px-10 py-8 animate-fade-in-up d2">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="w-9 h-9 rounded-lg bg-accent flex items-center justify-center shadow">
+                    <i class="fas fa-user text-white text-sm"></i>
+                </span>
+                <h2 class="text-base font-bold text-primary uppercase tracking-[3px] section-title">O mnie</h2>
+            </div>
+            <p class="text-[0.82rem] text-slate-600 leading-[1.85] text-justify max-w-none">
+              Jestem programistą .NET z doświadczeniem w tworzeniu integracji API oraz rozwoju aplikacji webowych i desktopowych. Od 2019 roku współpracuję z HiFlow Solutions, realizując rozwiązania dla klientów z rynków USA i UE w branży poligraficznej oraz opakowaniowej. Projektuję i wdrażam integracje z systemami ERP, księgowymi, kurierskimi i workflow pre-press, pracując m.in. z Microsoft Dynamics 365 Business Central, Salesforce, Sage Intacct, QuickBooks Online, Freightview, Hybrid Software Cloudflow oraz KSeF. Skutecznie wykorzystuję narzędzia AI w analizie i modernizacji systemów legacy, m.in. przy migracji aplikacji z Ruby on Rails oraz Microsoft Access do nowoczesnych rozwiązań opartych o .NET i Blazor. Interesuje mnie praca przy nowych projektach opartych na rozwiązaniach webowych, integracjach API i technologiach chmurowych.
+                        </p>
+            
+        </section>
+
+        <!-- ████ DWUKOLUMNOWY BODY ████ -->
+        <div class="cv-columns flex flex-col md:flex-row">
+
+            <!-- ──── LEWA KOLUMNA (wąska) ──── -->
+            <aside class="cv-sidebar w-full md:w-[300px] flex-shrink-0 bg-surface/85 border-r border-line px-7 py-8 flex flex-col gap-7">
+
+                <!-- WYKSZTAŁCENIE -->
+                <section class="animate-fade-in-up d3">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow">
+                            <i class="fas fa-graduation-cap text-white text-xs"></i>
+                        </span>
+                        <h2 class="text-xs font-bold text-primary uppercase tracking-[2.5px] section-title">Wykształcenie</h2>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-sm font-bold text-primary uppercase tracking-wide">Informatyka</h3>
+                        <p class="text-[0.8rem] font-semibold text-muted mt-1 leading-relaxed">
+                            <i class="fas fa-university text-accent text-[9px] mr-1"></i>SGGW w Warszawie
+                        </p>
+                        <p class="text-[0.8rem] text-muted mt-0.5 leading-relaxed">
+                            <i class="far fa-calendar-alt text-accent text-[9px] mr-1"></i>wrzesień 2015 – czerwiec 2019
+                        </p>
+                        <p class="text-[0.8rem] text-slate-500 mt-1.5 leading-relaxed">Specjalizacja: Inżynieria Systemów Informacyjnych</p>
+                    </div>
+                </section>
+
+                <!-- UMIEJĘTNOŚCI -->
+                <section class="animate-fade-in-up d5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow">
+                            <i class="fas fa-cogs text-white text-xs"></i>
+                        </span>
+                        <h2 class="text-xs font-bold text-primary uppercase tracking-[2.5px] section-title">Umiejętności</h2>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mt-4">
+                        <span class="skill-tag">C# / .NET</span>
+                        <span class="skill-tag">MS SQL</span>
+                        <span class="skill-tag">SSRS</span>
+                        <span class="skill-tag">Web API / REST / SOAP</span>
+                        <span class="skill-tag">WPF</span>
+                        <span class="skill-tag">ASP.NET MVC</span>
+                        <span class="skill-tag">OAuth 2.0 / JWT</span>
+                        <span class="skill-tag">Git / SVN</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Angular</span>
+                        <span class="skill-tag">WinForms</span>
+                        <span class="skill-tag">SignalR</span>
+                        <span class="skill-tag">EDI</span>
+                        <span class="skill-tag">API Integrations</span>
+                        <span class="skill-tag">Doc signing</span>
+                    </div>
+                </section>
+
+                <!-- JĘZYKI OBCE -->
+                <section class="animate-fade-in-up d7">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow">
+                            <i class="fas fa-globe text-white text-xs"></i>
+                        </span>
+                        <h2 class="text-xs font-bold text-primary uppercase tracking-[2.5px] section-title">Języki obce</h2>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-sm font-bold text-primary">Angielski - B2</h3>
+                        <p class="text-[0.75rem] text-slate-500 mt-4 leading-relaxed">
+                            Czytanie i pisanie dokumentacji, swobodna komunikacja.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ZAINTERESOWANIA -->
+                <section class="animate-fade-in-up d8">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow">
+                            <i class="fas fa-heart text-white text-xs"></i>
+                        </span>
+                        <h2 class="text-xs font-bold text-primary uppercase tracking-[2.5px] section-title">Zainteresowania</h2>
+                    </div>
+                    <p class="text-[0.75rem] text-slate-500 leading-relaxed mt-4">
+                        Nowe technologie, praktyczne zastosowania AI w pracy programisty, aktywność fizyczna i wydarzenia sportowe.
+                    </p>
+                </section>
+
+            </aside>
+
+            <!-- ──── PRAWA KOLUMNA (szeroka – doświadczenie) ──── -->
+            <main class="cv-main flex-1 px-10 py-9">
+
+                <section class="animate-fade-in-up d4">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="w-9 h-9 rounded-lg bg-accent flex items-center justify-center shadow">
+                            <i class="fas fa-briefcase text-white text-sm"></i>
+                        </span>
+                        <h2 class="text-base font-bold text-primary uppercase tracking-[3px] section-title">Doświadczenie</h2>
+                    </div>
+
+                    <!-- Programista .NET -->
+                    <div class="timeline-dot mb-8 animate-slide-in-left d5">
+                        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                            <h3 class="text-sm font-bold text-primary uppercase tracking-wider">Programista .NET</h3>
+                            <span class="text-[0.62rem] font-medium text-slate-100 bg-accent-dark border border-white/10 px-2.5 py-0.5 rounded-full meta-mono">obecnie</span>
+                        </div>
+                        <p class="text-xs text-muted mt-1.5 flex items-center gap-2 meta-mono">
+                            <i class="far fa-building text-accent text-[10px]"></i> HiFlow
+                            <span class="text-slate-300">|</span>
+                            <i class="far fa-calendar-alt text-accent text-[10px]"></i> marzec 2019 – obecnie
+                        </p>
+                        <p class="text-[0.8rem] text-slate-600 leading-[1.85] mt-3 text-justify">
+                            Rozwijam moduły planowania produkcji, SCADA i PLM w aplikacjach webowych oraz desktopowych, a także realizuję integracje API z systemami ERP, księgowymi, kurierskimi i workflow pre-press. Wdrażałem integracje m.in. z Microsoft Dynamics 365 Business Central, Salesforce, Sage Intacct, QuickBooks Online, Freightview, Hybrid Software Cloudflow oraz KSeF. Pracuję z .NET/C#, ASP.NET MVC, Web API, SignalR, Angular, React, WPF, WinForms i MS SQL, przygotowuję także raporty SSRS oraz rozwiązania EDI. W obszarze bezpieczeństwa integracji wykorzystuję OAuth, certyfikaty oraz mechanizmy podpisywania i szyfrowania dokumentów. Realizuję również modernizację starszych systemów, w tym migrację aplikacji z Ruby on Rails do technologii .NET oraz migrację aplikacji opartej na Microsoft Access do rozwiązania rozwijanego w Blazorze na platformie .NET 10. W tych projektach skutecznie wykorzystuję narzędzia AI do analizy kodu legacy, planowania migracji oraz przyspieszania implementacji nowych rozwiązań. Na co dzień współpracuję z konsultantami i wspieram obsługę zgłoszeń klientów, dbając o sprawne wdrażanie i rozwój rozwiązań.
+                        </p>
+                    </div>
+
+                    <!-- Staż KeepSkiller -->
+                    <div class="timeline-dot print-keep-together print-page-top-gap animate-slide-in-left d6">
+                        <h3 class="text-sm font-bold text-primary uppercase tracking-wider">Staż KeepSkiller</h3>
+                        <p class="text-xs text-muted mt-1.5 flex items-center gap-2 meta-mono">
+                            <i class="far fa-building text-accent text-[10px]"></i> KeepSkiller
+                            <span class="text-slate-300">|</span>
+                            <i class="far fa-calendar-alt text-accent text-[10px]"></i> październik 2018 – luty 2019
+                        </p>
+                        <p class="text-[0.8rem] text-slate-600 leading-[1.85] mt-3 text-justify">
+                           Podczas stażu zdobyłem praktyczne doświadczenie w tworzeniu aplikacji desktopowych i webowych w ekosystemie .NET. Pracowałem z C#, WPF, ASP.NET MVC, Web API, Angular, MS SQL, Entity Framework 6 i Dapper, a także tworzyłem testy jednostkowe i integracyjne w xUnit. Poznałem wzorce MVVM i MVC, pracę z DI/IoC, komunikację REST i WCF oraz zasady Clean Code, SOLID i Scrum. W ramach projektu zrealizowałem system do archiwizacji materiałów i opinii dla studentów, obejmujący bazę danych, warstwę logiki biznesowej, aplikację WPF oraz część webową.
+                        </p>
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+        <!-- ████ FOOTER / RODO ████ -->
+        <footer class="cv-footer px-10 py-5 border-t border-line bg-surface/90 animate-fade-in d9">
+            <p class="text-[0.6rem] text-slate-400 leading-relaxed text-justify">
+                Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu
+                rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych
+                (Dz. Ustaw z 2018, poz. 1000) oraz zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE)
+                2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem
+                danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE
+                (RODO).
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
