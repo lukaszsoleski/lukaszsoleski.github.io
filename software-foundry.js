@@ -20,10 +20,16 @@
     var workflowMode = 'vertical';
     var workflowSyncFrame = 0;
     var workflowWheelLockUntil = 0;
-    var workflowWheelThrottleMs = 520;
+    var workflowWheelThrottleMs = 500;
     var workflowWheelDeltaThreshold = 90;
     var workflowWheelDeltaBuffer = 0;
     var workflowWheelBufferReset = 0;
+    var workflowAutoIdleMs = 5000;
+    var workflowAutoStepMs = 5000;
+    var workflowAutoStartTimer = 0;
+    var workflowAutoStepTimer = 0;
+    var workflowAutoDirection = 1;
+    var workflowAutoRunning = false;
     var workflowEdgeMask = 24;
 
     function getTopbarOffset() {
@@ -125,6 +131,85 @@
         return Math.max(0, Math.min(workflowSteps.length - 1, activeWorkflowStep < 0 ? 0 : activeWorkflowStep));
     }
 
+    function clearWorkflowAutoStartTimer() {
+        if (workflowAutoStartTimer) {
+            window.clearTimeout(workflowAutoStartTimer);
+            workflowAutoStartTimer = 0;
+        }
+    }
+
+    function clearWorkflowAutoStepTimer() {
+        if (workflowAutoStepTimer) {
+            window.clearTimeout(workflowAutoStepTimer);
+            workflowAutoStepTimer = 0;
+        }
+    }
+
+    function stopWorkflowAuto() {
+        workflowAutoRunning = false;
+        clearWorkflowAutoStepTimer();
+    }
+
+    function resetWorkflowAuto() {
+        clearWorkflowAutoStartTimer();
+        stopWorkflowAuto();
+        workflowAutoDirection = 1;
+    }
+
+    function runWorkflowAutoStep() {
+        var currentStep;
+        var nextStep;
+
+        if (!workflowAutoRunning || workflowMode !== 'horizontal' || workflowSteps.length < 2) {
+            stopWorkflowAuto();
+            return;
+        }
+
+        currentStep = getWorkflowActiveStep();
+        nextStep = currentStep + workflowAutoDirection;
+
+        if (nextStep >= workflowSteps.length) {
+            workflowAutoDirection = -1;
+            nextStep = currentStep - 1;
+        } else if (nextStep < 0) {
+            workflowAutoDirection = 1;
+            nextStep = currentStep + 1;
+        }
+
+        if (nextStep < 0 || nextStep >= workflowSteps.length || nextStep === currentStep) {
+            stopWorkflowAuto();
+            return;
+        }
+
+        scrollWorkflowToStep(nextStep, 'smooth');
+        setStepState(nextStep, false);
+
+        clearWorkflowAutoStepTimer();
+        workflowAutoStepTimer = window.setTimeout(runWorkflowAutoStep, workflowAutoStepMs);
+    }
+
+    function scheduleWorkflowAutoStart() {
+        clearWorkflowAutoStartTimer();
+
+        if (prefersReducedMotion.matches || workflowMode !== 'horizontal' || workflowSteps.length < 2) {
+            return;
+        }
+
+        workflowAutoStartTimer = window.setTimeout(function () {
+            if (workflowMode !== 'horizontal' || workflowSteps.length < 2) {
+                return;
+            }
+
+            workflowAutoRunning = true;
+            runWorkflowAutoStep();
+        }, workflowAutoIdleMs);
+    }
+
+    function markWorkflowActivity() {
+        resetWorkflowAuto();
+        scheduleWorkflowAutoStart();
+    }
+
     function setStepState(stepNumber, animate) {
         var step = workflowSteps[stepNumber];
 
@@ -192,6 +277,8 @@
                 }
 
                 if (workflowMode === 'horizontal' && workflowTrack && workflowList) {
+                    markWorkflowActivity();
+
                     travelDistance = Math.max(1, getHorizontalTravelDistance());
                     targetTranslate = getStepTranslateTarget(targetStep);
                     targetRatio = targetTranslate / travelDistance;
@@ -261,6 +348,7 @@
 
             workflowMode = 'horizontal';
             activeWorkflowStep = -1;
+            resetWorkflowAuto();
             workflowSection.classList.add('is-horizontal');
             setStageProgress(0.18);
             setStepState(0, false);
@@ -307,6 +395,8 @@
                 if (!normalizedDelta) {
                     return;
                 }
+
+                markWorkflowActivity();
 
                 if (workflowWheelDeltaBuffer && Math.sign(normalizedDelta) !== Math.sign(workflowWheelDeltaBuffer)) {
                     workflowWheelDeltaBuffer = 0;
@@ -361,6 +451,7 @@
                     return;
                 }
 
+                markWorkflowActivity();
                 event.preventDefault();
                 scrollWorkflowToStep(nextStep, 'smooth');
                 setStepState(nextStep, false);
@@ -378,6 +469,7 @@
             workflowTrack.addEventListener('keydown', handleWorkflowKeydown);
             window.addEventListener('resize', handleResize);
             handleResize();
+            scheduleWorkflowAutoStart();
 
             return function () {
                 workflowMode = 'vertical';
@@ -393,6 +485,7 @@
                 workflowWheelLockUntil = 0;
                 workflowWheelDeltaBuffer = 0;
                 window.clearTimeout(workflowWheelBufferReset);
+                resetWorkflowAuto();
                 workflowSection.classList.remove('is-horizontal');
                 workflowTrack.scrollTo({ left: 0, top: 0, behavior: 'auto' });
                 setStageProgress(0.18);
@@ -406,6 +499,7 @@
             workflowWheelLockUntil = 0;
             workflowWheelDeltaBuffer = 0;
             window.clearTimeout(workflowWheelBufferReset);
+            resetWorkflowAuto();
             workflowSection.classList.remove('is-horizontal');
             setStageProgress(0.18);
             setStepState(0, false);
